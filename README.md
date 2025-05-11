@@ -8,5 +8,5 @@ The robot lawnmower **is not** autonomous, it requires an external program to im
   
 #     
 # Introduction  
-![image](images\components.png)  
+![image](images/components.png)  
 Two main components are used in this project.  
