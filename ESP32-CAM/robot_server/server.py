@@ -19,9 +19,16 @@ def render_template(filename, context=None):
     try:
         base_dir = "/".join(__file__.split("/")[:-1])
         template_path = "/".join([base_dir, "templates", filename])
+        styles_file = "/".join([base_dir, "static", "styles.css"])
 
         with open(template_path, "r") as f:
             content = f.read()
+
+        with open(styles_file, "r") as f:
+            styles = f.read()
+
+        # Special replace for static files in the HTML Template - use {{{ static_styles }}}
+        content = content.replace("{{{ static_styles }}}", styles)
 
         for key, value in context.items():
             content = content.replace("{{ " + key + " }}", str(value))
@@ -63,15 +70,16 @@ def start_server(port=80):
             pass # Defaults to /
         
         if path in routes:
-            http_response = routes[path]()  # Call the route handler to get the HTML Part of the response based on the URL command path
+            http_response = routes[path]()  # Call the route handler to get the response (raw data or Header+Body HTTP response)
             cl.sendall(http_response)
         else:
             if path == '/exit':
-                # Return control back to web_server calling function
+                # BYpass the routes feature -> Return control back to web_server calling function
                 server_on = False
                 print(" ⛔ Shuting down server")
                 cl.send("HTTP/1.1 503 Service Unavailable\r\n\r\n <p>&nbsp;&nbsp;</p>Error 503 - Robot controller was shutdown or is unavailable.")
             else:
+                print(" 🛑 Error 404 - Page not found")
                 cl.send("HTTP/1.1 404 Not Found\r\n\r\n <p>&nbsp;&nbsp;</p>Error 404 - Page Not Found")
 
         cl.close()    # Flush connection

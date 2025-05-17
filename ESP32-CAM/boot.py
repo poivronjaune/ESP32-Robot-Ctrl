@@ -4,5 +4,5 @@
 #import webrepl
 #webrepl.start()
 
-#execfile('webcam.py')
-#execfile('robotctrl.py')
+# TOD: Implement a delay for CTRL-C to prevent automatic start when developping
+#execfile('go.py')

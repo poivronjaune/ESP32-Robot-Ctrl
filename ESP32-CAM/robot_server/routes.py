@@ -48,16 +48,16 @@ def about():
 def stop():
     wheels.stop()
     context = {
-        "title": "ESP32 About",
+        "title": "ESP32 Drive",
         "heading": "BROTHERS Robert Controller",
     }      
     http_header = header_200()
     return http_header + render_template("drive.html", context)
 
 @route("/forward")
-def stop():
+def forward():
     context = {
-        "title": "ESP32 About",
+        "title": "ESP32 Drive",
         "heading": "BROTHERS Robert Controller",
     }          
     wheels.forward()
@@ -65,10 +65,10 @@ def stop():
     return http_header + render_template("drive.html", context)
 
 @route("/backward")
-def stop():
+def backward():
     wheels.backward()
     context = {
-        "title": "ESP32 About",
+        "title": "ESP32 Drive",
         "heading": "BROTHERS Robert Controller",
     }          
     http_header = header_200()
@@ -77,7 +77,7 @@ def stop():
 @route("/drive")
 def drive():
     context = {
-        "title": "ESP32 About",
+        "title": "ESP32 Drive",
         "heading": "BROTHERS Robert Controller",
     }          
     http_header = header_200()
@@ -86,11 +86,11 @@ def drive():
 @route("/image")
 def image():
     context = {
-        "title": "ESP32 Ctrl",
+        "title": "ESP32 Image",
         "heading": "BROTHERS Robert Controller (Image display)",
     }
     http_header = header_200()
-    return http_header + render_template("photo.html", context)
+    return http_header + render_template("image.html", context)
 
 
 #### API Calls ####

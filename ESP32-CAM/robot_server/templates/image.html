@@ -2,21 +2,18 @@
 <html>
 <head>
     <title>{{ title }}</title>
-    {{{ static_styles }}}             <!-- Special variable for render_template hard coded to load styles.css from a static folder  -->    
+    {{{ static_styles }}}             <!-- Special variable for render_template hard coded to load styles.css from a static folder  --> 
 </head>
 <body>
     <h1>{{ heading }}</h1>
-
+    
     <div class="controls">
         <div class="row">
-            <p>{{ message }}</p>
+            <img id="snapshot" src="/api/snap">
         </div>    
         <div class="row">
             <p><a href="/">Home</a></p>
         </div>    
     </div>
-
 </body>
 </html>
-
-
