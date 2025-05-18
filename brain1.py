@@ -5,10 +5,14 @@ import cv2
 from ultralytics import YOLO
 
 # ESP32 camera URL
-BASE_URL = "http://192.168.1.31"
+#BASE_URL = "http://192.168.1.31"
+BASE_URL = "http://192.168.0.193"
+IPCAM_URL = "http://thingino:thingino@192.168.0.237/image.jpg" 
+
 
 def get_image_snap():
-    url_snap = BASE_URL + "/api/snap"
+    #url_snap = BASE_URL + "/api/snap"
+    url_snap = IPCAM_URL
     try:
         response = requests.get(url_snap, timeout=2)
         if response.status_code == 200:
@@ -44,7 +48,8 @@ def forward():
     except:
         print("Forward request error")
 
-if __name__ == "__main__":
+
+def main():
     model = YOLO("yolo12n.pt")  # Load YOLO model (you can use yolov8s.pt, etc.)
     moving = False  # Track robot state
 
@@ -58,9 +63,10 @@ if __name__ == "__main__":
         results = model(img)                                            # Detect objects with model
         names = results[0].names                                        # Get class names that can be detected by model
         detected = [names[int(cls)] for cls in results[0].boxes.cls]    # Organize detected class names as a list for ease of use later
+        print("Detectable objects:", detected)                                   # Print detected objects
 
         # Moving logic
-        if 'person' in detected:                                        # Name of image detected to trigger a stop command
+        if 'cup' in detected:                                        # Name of image detected to trigger a stop command
             if moving:      
                 stop()      
                 moving = False
@@ -77,3 +83,6 @@ if __name__ == "__main__":
 
     stop()                                                              # Stop robot before exiting
     cv2.destroyAllWindows()                                             # Close all OpenCV windows       
+
+if __name__ == "__main__":
+    main()
