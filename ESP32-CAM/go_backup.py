@@ -1,16 +1,16 @@
-import time
-import socket
-import network
-import machine
-import camera
-# from web_server import start_server
+import time, socket, network
+import machine, camera
+from robot_server.config import SSID, PASSWORD
 from robot_server.server import start_server
+
+from robot_server.vision import cam_esp32 as cam
+#from robot_server.vision import cam_ip as cam
 
 camera.deinit() # Call this function to make sure camera does not have pre-run garbage
 
 # Change these settings for you specific Wifi
-SSID = 'Guest Slow'
-PASSWORD = 'FleursEtJardin'
+#SSID = 'Guest Slow'
+#PASSWORD = 'FleursEtJardin'
 
 # Setup Camera - 5 retries or fail
 for i in range(5):
@@ -47,4 +47,5 @@ else:
 
 camera.deinit()
 machine.reset()
+
 

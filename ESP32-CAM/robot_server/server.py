@@ -2,7 +2,10 @@ import socket
 import os
 import gc
 import time
-import camera
+try:
+    import camera
+except:
+    pass
 
 routes = {}
 
