@@ -7,8 +7,9 @@ import gc
 
 try:
     import camera
+    esp32cam = True
 except:
-    pass
+    esp32cam = False
 
 #### Common header for most HTML pages ####
 def header_200():
@@ -140,9 +141,16 @@ def api_stop():
 
 @route("/api/snap")
 def snap():
-    img_data = camera.capture()
-    raw_data = camera.capture() # Raw byte code for image
-    time.sleep_ms(100)
+    if esp32cam:
+        img_data = camera.capture()
+        raw_data = camera.capture() # Raw byte code for image
+        time.sleep_ms(100)
+    else:
+        base_dir = "/".join(__file__.split("/")[:-1])
+        nocamera_img_file = "/".join([base_dir, "static", "nocamera.jpg"])
+
+        with open(nocamera_img_file, "r") as f:
+            raw_data = f.read()
     
     http_header = header_jpeg(len(raw_data))
     
