@@ -1,10 +1,15 @@
 from .server import route, render_template
 from . import wheels
-import camera
 import time
 import json
 import ubinascii
 import gc
+
+try:
+    import camera
+    esp32cam = True
+except:
+    esp32cam = False
 
 #### Common header for most HTML pages ####
 def header_200():
@@ -27,7 +32,7 @@ def header_jpeg(payload_size):
 def index():
     context = {
         "title": "ESP32 Home",
-        "heading": "BROTHERS Robert Controller!",
+        "heading": "BROTHERS Robot Controller!",
         "message": "Served by a MicroPython ESP32 web server."
     }
     #return render_template("index.html", context)
@@ -38,7 +43,7 @@ def index():
 def about():
     context = {
         "title": "ESP32 About",
-        "heading": "BROTHERS Robert Controller",
+        "heading": "BROTHERS Robot Controller",
         "message": "Served by a MicroPython ESP32 web server."
     }    
     http_header = header_200()
@@ -49,7 +54,7 @@ def stop():
     wheels.stop()
     context = {
         "title": "ESP32 Drive",
-        "heading": "BROTHERS Robert Controller",
+        "heading": "BROTHERS Robot Controller",
     }      
     http_header = header_200()
     return http_header + render_template("drive.html", context)
@@ -58,7 +63,7 @@ def stop():
 def forward():
     context = {
         "title": "ESP32 Drive",
-        "heading": "BROTHERS Robert Controller",
+        "heading": "BROTHERS Robot Controller",
     }          
     wheels.forward()
     http_header = header_200()
@@ -69,7 +74,7 @@ def backward():
     wheels.backward()
     context = {
         "title": "ESP32 Drive",
-        "heading": "BROTHERS Robert Controller",
+        "heading": "BROTHERS Robot Controller",
     }          
     http_header = header_200()
     return http_header + render_template("drive.html", context)
@@ -78,7 +83,7 @@ def backward():
 def drive():
     context = {
         "title": "ESP32 Drive",
-        "heading": "BROTHERS Robert Controller",
+        "heading": "BROTHERS Robot Controller",
     }          
     http_header = header_200()
     return http_header + render_template("drive.html", context)
@@ -87,7 +92,7 @@ def drive():
 def image():
     context = {
         "title": "ESP32 Image",
-        "heading": "BROTHERS Robert Controller (Image display)",
+        "heading": "BROTHERS Robot Controller (Image display)",
     }
     http_header = header_200()
     return http_header + render_template("image.html", context)
@@ -136,9 +141,16 @@ def api_stop():
 
 @route("/api/snap")
 def snap():
-    img_data = camera.capture()
-    raw_data = camera.capture() # Raw byte code for image
-    time.sleep_ms(100)
+    if esp32cam:
+        img_data = camera.capture()
+        raw_data = camera.capture() # Raw byte code for image
+        time.sleep_ms(100)
+    else:
+        base_dir = "/".join(__file__.split("/")[:-1])
+        nocamera_img_file = "/".join([base_dir, "static", "nocamera.jpg"])
+
+        with open(nocamera_img_file, "r") as f:
+            raw_data = f.read()
     
     http_header = header_jpeg(len(raw_data))
     
