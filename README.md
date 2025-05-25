@@ -27,7 +27,10 @@ This project is designed for learning and fun. For this purpose we chose to impl
 ## Hardware
 - ESP32-S2 micro-controller based on the [espressif](https://www.espressif.com/en/products/socs/esp32-s2) hardware with the Camera package  
 - An IP-Camera with an RTSP protocol OR an onboard ESP32-CAM that captures still images
-- A battery
+- A battery  
+- DC Motors  
+- Motor controllers  
+- DIY Platform and wheels
 
 ## Robot controller 
 - An ESP32 with a micropython firmware controls the motors and checks the battery level  
