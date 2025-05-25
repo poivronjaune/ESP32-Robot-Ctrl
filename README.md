@@ -13,7 +13,7 @@ The robot lawnmower **is not** autonomous, it requires an external program to im
 
 #     
 # Introduction  
-![image](/images/componentsV2.png)  
+![image](/images/componentsV2.png)   
 
 This project is divided in two main components.  
 - The Robot itself with electronics, camera, motors, battery and blades  
