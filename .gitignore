@@ -1,5 +1,4 @@
 # Local project exclusions
-config.*
 env/
 *.env
 *.pt

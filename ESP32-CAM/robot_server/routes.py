@@ -7,9 +7,8 @@ import gc
 
 try:
     import camera
-    esp32cam = True
 except:
-    esp32cam = False
+    pass
 
 #### Common header for most HTML pages ####
 def header_200():
@@ -121,6 +120,13 @@ def default_api_response(msg):
 
     return http_header + payload
 
+@route("/api")
+def api_stop():
+    wheels.stop()
+    json_response = default_api_response("API Root")
+    return json_response
+
+
 @route("/api/stop")
 def api_stop():
     wheels.stop()
@@ -139,18 +145,23 @@ def api_stop():
     json_response = default_api_response("BACKWARD")
     return json_response
 
+@route("/api/left")
+def api_left():
+    wheels.left()
+    json_response = default_api_response("LEFT TURN")
+    return json_response
+
+@route("/api/right")
+def api_right():
+    wheels.right()
+    json_response = default_api_response("RIGHT TURN")
+    return json_response
+
 @route("/api/snap")
 def snap():
-    if esp32cam:
-        img_data = camera.capture()
-        raw_data = camera.capture() # Raw byte code for image
-        time.sleep_ms(100)
-    else:
-        base_dir = "/".join(__file__.split("/")[:-1])
-        nocamera_img_file = "/".join([base_dir, "static", "nocamera.jpg"])
-
-        with open(nocamera_img_file, "r") as f:
-            raw_data = f.read()
+    img_data = camera.capture()
+    raw_data = camera.capture() # Raw byte code for image
+    time.sleep_ms(100)
     
     http_header = header_jpeg(len(raw_data))
     
