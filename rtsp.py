@@ -1,7 +1,8 @@
 import cv2
 
 # RTSP stream URL
-rtsp_url = "rtsp://thingino:thingino@192.168.1.36:554/ch1"
+#rtsp_url = "rtsp://thingino:thingino@192.168.1.36:554/ch1"
+rtsp_url = "rtsp://thingino:thingino@192.168.0.21:554/ch1"
 
 # Open connection to the RTSP stream
 cap = cv2.VideoCapture(rtsp_url)
