@@ -16,6 +16,7 @@ except Exception as e:
 #SSID = 'Guest Slow'
 #PASSWORD = 'FleursEtJardin'
 
+cam = None
 # Setup Camera - 5 retries or fail
 if esp32cam:
     for i in range(5):

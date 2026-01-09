@@ -63,7 +63,7 @@ def main():
         if img is None:
             continue
 
-        results = model(img)                                            # Detect objects with model
+        results = model(img, classes=[0])                               # Detect person objects with model
         names = results[0].names                                        # Get class names that can be detected by model
         detected = [names[int(cls)] for cls in results[0].boxes.cls]    # Organize detected class names as a list for ease of use later
         print("Detectable objects:", detected)                          # Print detected objects

@@ -2,10 +2,6 @@ import socket
 import os
 import gc
 import time
-try:
-    import camera
-except:
-    pass
 
 routes = {}
 
@@ -33,6 +29,7 @@ def render_template(filename, context=None):
         # Special replace for static files in the HTML Template - use {{{ static_styles }}}
         content = content.replace("{{{ static_styles }}}", styles)
 
+        # Loop through contect dictionary to replace all context variable from the HTML template with the str(value) of the key context
         for key, value in context.items():
             content = content.replace("{{ " + key + " }}", str(value))
 
@@ -41,6 +38,7 @@ def render_template(filename, context=None):
     except Exception as e:
         # TODO: Improve response to be a valide HTML File
         return "<h1>Template Error: {}</h1>".format(e)
+
 
 # --- WEB SERVER LOOP ---
 def start_server(port=80):
@@ -60,8 +58,6 @@ def start_server(port=80):
             request = request.decode('utf-8')
         except Exception as e:
             print(" 🛑 Error: ",e)
-        #finally:
-        #    cl.close()            
             
         path = "/"
         try:
@@ -75,15 +71,15 @@ def start_server(port=80):
         if path in routes:
             http_response = routes[path]()  # Call the route handler to get the response (raw data or Header+Body HTTP response)
             cl.sendall(http_response)
+        #else:
+            #if path == '/exit':
+            #    # BYpass the routes feature -> Return control back to web_server calling function
+            #    server_on = False
+            #    print(" ⛔ Shuting down server")
+            #    cl.send("HTTP/1.1 503 Service Unavailable\r\n\r\n <p>&nbsp;&nbsp;</p>Error 503 - Robot controller was shutdown or is unavailable.")
         else:
-            if path == '/exit':
-                # BYpass the routes feature -> Return control back to web_server calling function
-                server_on = False
-                print(" ⛔ Shuting down server")
-                cl.send("HTTP/1.1 503 Service Unavailable\r\n\r\n <p>&nbsp;&nbsp;</p>Error 503 - Robot controller was shutdown or is unavailable.")
-            else:
-                print(" 🛑 Error 404 - Page not found")
-                cl.send("HTTP/1.1 404 Not Found\r\n\r\n <p>&nbsp;&nbsp;</p>Error 404 - Page Not Found")
+            print(" 🛑 Error 404 - Page not found")
+            cl.send("HTTP/1.1 404 Not Found\r\n\r\n <p>&nbsp;&nbsp;</p>Error 404 - Page Not Found")
 
         cl.close()    # Flush connection
         del cl        # Freeup memory
