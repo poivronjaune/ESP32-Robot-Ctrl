@@ -4,12 +4,10 @@ import numpy as np
 import cv2
 from ultralytics import YOLO
 
-# ESP32 camera URL
-# BASE_URL = "http://192.168.1.31"
-BASE_URL = "http://192.168.0.3/"
-#BASE_URL = "http://192.168.1.37"
+BASE_URL = "http://192.168.1.30"
 #IPCAM_URL = "http://thingino:thingino@192.168.1.36/image.jpg" 
-IPCAM_URL = "http://thingino:thingino@192.168.0.21/image.jpg" 
+IPCAM_URL = "http://thingino:thingino@192.168.1.29/image.jpg" # This link grabs a large 1920x1080 pixels image
+
 
 
 def get_image_snap():
@@ -28,6 +26,9 @@ def get_image_snap():
     except requests.exceptions.RequestException:
         print("Error connecting to camera")
         return None
+
+def get_latest_frame():
+    pass
 
 def stop():
     url = BASE_URL + "/api/stop"
@@ -59,7 +60,8 @@ def main():
     print("Press 'q' to quit the program.")
     
     while True:
-        img = get_image_snap()
+        #img = get_image_snap()
+        img = get_latest_frame()
         if img is None:
             continue
 
