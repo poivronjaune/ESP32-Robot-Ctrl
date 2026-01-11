@@ -38,7 +38,7 @@ def stop():
     Motor2In1.value(0)
     Motor2In2.value(0)
  
-def right(speedLeft = 200, speedRight = 200):
+def right(speedLeft = 500, speedRight = 500):
     Motor1In1.value(1)   # Left motor goes backward
     Motor1In2.value(0)
     Motor2In1.value(1)   # Right motor goes forward
@@ -46,7 +46,7 @@ def right(speedLeft = 200, speedRight = 200):
     Motor1Speed.duty(speedLeft)
     Motor2Speed.duty(speedRight)
     
-def left(speedLeft = 200, speedRight = 200):
+def left(speedLeft = 500, speedRight = 500):
     Motor1In1.value(0)   # Left motor goes forward
     Motor1In2.value(1)
     Motor2In1.value(0)   # Right motor goes backward

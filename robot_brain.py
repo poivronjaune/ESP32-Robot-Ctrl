@@ -15,23 +15,49 @@ while cam_feed.get_latest_frame() is None:
     time.sleep(0.1)
 print("🛠 - Robot camera received initial image...")
 
-robot_ctrl = RobotControl(URL_ROBOT_CTRL)
-print(robot_ctrl.forward())
-time.sleep(2)
-robot_ctrl.stop()
-
 robot_detection = RobotDetection()
+print("🛠 - Robot detection function activated...")
+
+robot_ctrl = RobotControl(URL_ROBOT_CTRL)
+print("🛠 - Robot movement controller activated...")
+time.sleep(2)
+robot_ctrl.execute('STOP')
+
+print('---------------------')
+print('use a,w,s,d and space to control robot movement')
+print('---------------------')
+
 while True:
     latest_frame = cam_feed.get_latest_frame()
 
-    latest_frame = robot_detection.augment_image(latest_frame)
+    # latest_frame = robot_detection.augment_image(latest_frame)
+    num_objects_found = robot_detection.detect_objects(latest_frame)
+    if num_objects_found > 0:
+        print(f"EMERGENCY STOP {robot_ctrl.execute('STOP')}")
+        latest_frame = robot_detection.add_bounding_boxes()
+        robot_detection.flush()
     
     cv2.imshow('Latest Thingino Frame', latest_frame)
 
+
+
     # Press 'q' to exit the loop
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    key_pressed = cv2.waitKey(1) & 0xFF
+    if key_pressed == ord('q'):
+        print(f"'q' pressed - stoping script...")
         break
-    
+    elif key_pressed == ord(' '):
+        print(f"{robot_ctrl.execute('STOP')}")
+    elif key_pressed == ord('w'):
+        print(f"{robot_ctrl.execute('FORWARD')}")
+    elif key_pressed == ord('s'):
+        print(f"{robot_ctrl.execute('BACKWARD')}")
+    elif key_pressed == ord('a'):
+        print(f"{robot_ctrl.execute('LEFT')}")        
+    elif key_pressed == ord('d'):
+        print(f"{robot_ctrl.execute('RIGHT')}")        
+        
+            
     ## Add a small delay if needed for CPU usage management
     time.sleep(0.01)
 

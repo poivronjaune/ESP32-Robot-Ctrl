@@ -3,35 +3,23 @@ import requests
 class RobotControl:
     def __init__(self, base_url):
         self.base_url = base_url 
+        self.commands = {
+            "STOP" : "/api/stop",
+            "FORWARD": "/api/forward",
+            "BACKWARD": "/api/backward",
+            "LEFT": "/api/left",
+            "RIGHT": "/api/right"            
+        }
+    
+    def execute(self, command):
+        url = self.base_url + self.commands.get(command)
+        try:
+            res = requests.get(url, timeout=1)
+            if res.status_code == 200:
+                json_response = res.json()
+            else:
+                json_response = {"msg": "ERROR", "code": res.status_code, "status": f"Server did not execute {command} command"}
+        except:
+            json_response = {"msg": "ERROR", "code": 500, "status": f"No response from server, {command} command"}
         
-
-    def stop(self):
-        url = self.base_url + "/api/stop"
-        try:
-            res = requests.get(url, timeout=1)
-            if res.status_code == 200:
-                print("Robot stopped:", res.json().get('msg'))
-            else:
-                print("Stop command failed")
-            return res.json()
-        except:
-            print("Stop request error")
-            return None
-
-    def forward(self):
-        url = self.base_url + "/api/forward"
-        json_response = "Empty String"
-        try:
-            res = requests.get(url, timeout=1)
-            if res.status_code == 200:
-                print("Robot moving forward:", res.json().get('msg'))
-                json_response = res.json
-            else:
-                print("Forward command failed")
-                json_response = {"msg": "STOP", "code": 500, "status": "No response, Forward request error"}
-        except:
-            print("Forward request error")
-            json_response = {"msg": "STOP", "code": 500, "status": "No response, Forward request error"}
-            
         return json_response
-            
