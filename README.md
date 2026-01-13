@@ -85,10 +85,21 @@ py -m esptool write_flash 0x1000 ESP32_GENERIC-20251209-v1.27.0.bin
 ```
 
 # Uploading Scripts to micro-python
-Use Thonny to connect to EPS32 and upload python files to micro-controller  
+Use [Thonny](https://thonny.org/) to connect to EPS32 and upload python files to micro-controller  
+
+# Installing the robot package
+More details Coming soon  
+```
+py -3.13 -m venv .venv
+.venv\script\actiavte
+py pip -m pip install -e .
+```
+  
+Change values in the robot\robot_config.py to reflect your local area network connections for IP Camera and ESP32 Processor.  
+Change preferred YOLO Object detection [model](https://docs.ultralytics.com/models/)  
 
 # YOLO Model Objects
-Default COCO Dataset objects detectable without training.  
+Default model is 12n (yolo12n.pt) COCO Dataset objects detectable without training.  
 Class names:  
   0: person  
   1: bicycle  

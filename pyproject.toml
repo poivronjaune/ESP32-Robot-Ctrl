@@ -1,0 +1,25 @@
+# https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "robot"
+version = "0.0.1"
+requires-python = ">=3.10,<3.14"
+
+dependencies = [
+    "requests",
+    "numpy",
+    "opencv-python",
+    "ultralytics",
+    "pygame",
+    "esptool"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["robot*"]
+
+[project.scripts]
+robot = "robot.__main__:main"

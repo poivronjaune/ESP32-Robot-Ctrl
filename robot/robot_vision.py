@@ -2,6 +2,7 @@ import cv2
 import threading
 import time
 from ultralytics import YOLO
+from robot.robot_config import YOLO_MODEL, OBSTACLES
 
 class RobotCam:
     def __init__(self, url="rtsp://thingino:thingino@192.168.1.29:554/ch1"):
@@ -55,11 +56,13 @@ class RobotCam:
         if self.thread is not None:
             self.thread.join()
 
+
+
 class RobotDetection:
     def __init__(self):
-        self.model = YOLO("yolo12n.pt")  
+        self.model = YOLO(YOLO_MODEL)  
         #self.obj_to_detect = [0, 16, 65] # 0:Person, 16:Dog, 65:Remote 
-        self.obj_to_detect = [65]
+        self.obj_to_detect = OBSTACLES
         self.frame = None
         self.box_details = []
 
