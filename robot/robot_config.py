@@ -6,10 +6,11 @@ URL_RTSP_FEED = 'rtsp://thingino:thingino@robot-cam.local:554/ch1'  # Robot IP C
 URL_ROBOT_CTRL = 'http://robot-ctrl.local/' # ESP32 Chez Marc
 
 # YOLO model for object detection
-YOLO_MODEL = "yolo12n.pt"
+#YOLO_MODEL = "yolo12n.pt"
+YOLO_MODEL = "yolov8n.pt"
 
 # Obstacles that will call an emergency stop of the robot
-OBSTACLES = [16, 67] # 16:dog, 67:Cell phone
+OBSTACLES = [49] # 49: Orange
 
 # List of COCO default obstacles detected by YOLO model
 """_yolo class names_ for object detection

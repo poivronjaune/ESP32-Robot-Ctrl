@@ -180,4 +180,18 @@ Class names:
   76: scissors  
   77: teddy bear  
   78: hair drier  
-  79: toothbrush  
+  79: toothbrush
+  
+  # CUDA Setup
+  Check nvidia driver version
+  ```
+  nvcc--version
+  ```
+
+  Go to [pytorch get started website](https://pytorch.org/get-started/locally/)   
+  Choose your install command from the following setup screen  
+  ![image](/images/PyTorchInstallConfigurator.png)   
+  Use the pip install command before doing pip install -e .  
+  
+
+

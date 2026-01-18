@@ -60,9 +60,12 @@ class RobotCam:
 
 class RobotDetection:
     def __init__(self):
-        self.model = YOLO(YOLO_MODEL)  
+        self.model = YOLO(YOLO_MODEL)          
+        self.model.to('cpu') # CRITICAL: Set to CPU explicitly and optimize
+        self.model.fuse() # Reduce inference overhead, Fuse conv and bn layers for faster inference
         #self.obj_to_detect = [0, 16, 65] # 0:Person, 16:Dog, 65:Remote 
         self.obj_to_detect = OBSTACLES
+        self.frame_skip = 3  # Process every 3rd frame
         self.frame = None
         self.box_details = []
 
@@ -79,6 +82,11 @@ class RobotDetection:
         if frame is None:
             self.frame = None
             return None
+
+        # Skip frames to reduce CPU load
+            self.frame_count += 1
+            if self.frame_count % self.frame_skip != 0:
+                return len(self.box_details)  # Return previous results
         
         self.frame = frame
         results = self.model(frame, classes=self.obj_to_detect, verbose=False)

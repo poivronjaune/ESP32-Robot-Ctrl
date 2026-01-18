@@ -45,7 +45,7 @@ def main():
 
         # Press 'q' to exit the loop
         key_pressed = cv2.waitKey(1) & 0xFF
-        if key_pressed == ord('q'):
+        if key_pressed == ord('q') or key_pressed == 27: # ESC
             print(f"'q' pressed - stoping robot...")
             break
         elif key_pressed == ord(' '):
