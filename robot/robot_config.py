@@ -1,6 +1,9 @@
 # Setup these constants with local area network specific devices
-URL_RTSP_FEED = 'rtsp://thingino:thingino@192.168.1.29:554/ch1'  # Robot IP Camera
-URL_ROBOT_CTRL = 'http://192.168.1.30/'
+#URL_RTSP_FEED = 'rtsp://thingino:thingino@192.168.1.29:554/ch1'  # Robot IP Camera
+URL_RTSP_FEED = 'rtsp://thingino:thingino@robot-cam.local:554/ch1'  # Robot IP Camera Chez Marc
+# URL_ROBOT_CTRL = 'http://192.168.1.30/'
+# URL_ROBOT_CTRL = 'http://192.168.0.249/' # ESP32 Chez Marc
+URL_ROBOT_CTRL = 'http://robot-ctrl.local/' # ESP32 Chez Marc
 
 # YOLO model for object detection
 YOLO_MODEL = "yolo12n.pt"
